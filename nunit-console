@@ -1,0 +1,2 @@
+#!/bin/sh
+exec mono --debug $MONO_OPTIONS packages/NUnit.ConsoleRunner.3.7.0/tools/nunit3-console.exe "$@"
