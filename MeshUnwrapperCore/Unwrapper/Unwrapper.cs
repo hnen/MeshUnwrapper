@@ -101,6 +101,11 @@ namespace MeshUnwrapper.Unwrapper
             var connections = GenerateEdgeConnections(triangles);
             
             int firstTri = 0;
+            
+            if (triangles.Count <= firstTri)
+            {
+                throw new Exception("firstTri out of bounds");
+            }
 
             // transform first triangle on XZ plane
             Mat4HighPrecision firstRot;
@@ -116,7 +121,6 @@ namespace MeshUnwrapper.Unwrapper
             }
 
             var firstTf = firstRot;
-
             
             var firstEdge = new Edge(triangles[firstTri].p0, triangles[firstTri].p1);
 
@@ -139,6 +143,10 @@ namespace MeshUnwrapper.Unwrapper
                 var i = popAction();
                 if (iteratedTris.Contains(i.TriIndex)) {
                     continue;
+                }
+                if (i.TriIndex >= triangles.Count)
+                {
+                    throw new Exception("TriIndex " + i.TriIndex + " out of bounds, triangle count: " + triangles.Count);
                 }
                 iteratedTris.Add(i.TriIndex);
                 var t = triangles[i.TriIndex];
